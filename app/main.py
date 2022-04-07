@@ -5,10 +5,12 @@ from app.crud import crud
 from app.db import schemas
 
 from app.models import Role, User
-from app.db.database import SessionLocal
+from app.db.database import engine, SessionLocal, Base
 
 app = FastAPI(title="Maestro API")
 
+# create tables if they don't exist - Probably shouldn't happen once alembic does the migration
+Base.metadata.create_all(engine)
 
 # Dependency
 def get_db():
