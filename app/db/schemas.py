@@ -37,3 +37,17 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class StepBase(BaseModel):
+    step_id: int
+    substep_id: int
+    status: str
+
+
+class StepCreated(StepBase):
+    pass
+
+
+class StepUpdated(BaseModel):
+    status: str
