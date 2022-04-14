@@ -1,11 +1,6 @@
 import uvicorn
-from fastapi import Depends, FastAPI, HTTPException, APIRouter
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, APIRouter
 
-from app.crud import crud
-from app.db import schemas
-
-from app.models import Role, User
 from app.db.database import engine, SessionLocal, Base
 from fastapi.middleware.cors import CORSMiddleware
 
