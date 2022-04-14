@@ -3,10 +3,7 @@ from fastapi import FastAPI, APIRouter
 from app.db.database import engine, SessionLocal, Base
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import (
-    users,
-    roles,
-)
+from app.routers import users, roles
 
 app = FastAPI(title="Maestro API")
 app.add_middleware(
