@@ -1,10 +1,12 @@
-import uvicorn
 from fastapi import FastAPI, APIRouter
 
 from app.db.database import engine, SessionLocal, Base
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routes import users, roles
+from app.routers import (
+    users,
+    roles,
+)
 
 app = FastAPI(title="Maestro API")
 app.add_middleware(
@@ -20,15 +22,6 @@ app.add_middleware(
 )
 # create tables if they don't exist - Probably shouldn't happen once alembic does the migration
 Base.metadata.create_all(engine)
-
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 api_router = APIRouter()
@@ -49,7 +42,3 @@ app.include_router(api_router)
 @app.get("/")
 def index():
     return {"message": "Welcome to Maestro service"}
-
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)

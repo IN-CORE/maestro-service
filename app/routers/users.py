@@ -5,7 +5,7 @@ from app.db import schemas
 
 from sqlalchemy.orm import Session
 
-from app.main import get_db
+from app.db.database import get_db
 
 router = APIRouter()
 
