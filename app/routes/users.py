@@ -1,36 +1,31 @@
-from typing import List
-
-from bson import ObjectId
 from fastapi import APIRouter, HTTPException, Depends
-from pymongo import MongoClient
 
-from app import dependencies
-from app.models.users import UserDB, UserOut
+from app.crud import crud
+from app.db import schemas
+
+from sqlalchemy.orm import Session
+
+from app.main import get_db
 
 router = APIRouter()
 
 
-@router.get("", response_model=List[UserOut])
-async def get_users(
-    db: MongoClient = Depends(dependencies.get_db), skip: int = 0, limit: int = 2
-):
-    users = []
-    for doc in await db["users"].find().skip(skip).limit(limit).to_list(length=limit):
-        users.append(UserOut(**doc))
+@router.get("", response_model=list[schemas.User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 
-@router.get("/{user_id}", response_model=UserOut)
-async def get_user(user_id: str, db: MongoClient = Depends(dependencies.get_db)):
-    if (user := await db["users"].find_one({"_id": ObjectId(user_id)})) is not None:
-        return UserOut.from_mongo(user)
-    raise HTTPException(status_code=404, detail=f"User {user_id} not found")
+@router.get("/{user_id}", response_model=schemas.User)
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
 
 
-@router.get("/username/{username}", response_model=UserOut)
-async def get_user_by_name(
-    username: str, db: MongoClient = Depends(dependencies.get_db)
+@router.post("/{user_id}/roles/", response_model=schemas.Role)
+def create_role_for_user(
+        user_id: int, role: schemas.RoleCreate, db: Session = Depends(get_db)
 ):
-    if (user := await db["users"].find_one({"email": username})) is not None:
-        return UserOut.from_mongo(user)
-    raise HTTPException(status_code=404, detail=f"User {username} not found") 
+    return crud.create_user_role(db=db, role=role, user_id=user_id)
