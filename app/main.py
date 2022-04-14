@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 
 from app.crud import crud
@@ -8,9 +8,20 @@ from app.models import Role, User
 from app.db.database import engine, SessionLocal, Base
 
 app = FastAPI(title="Maestro API")
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # create tables if they don't exist - Probably shouldn't happen once alembic does the migration
 Base.metadata.create_all(engine)
+
 
 # Dependency
 def get_db():
@@ -20,6 +31,15 @@ def get_db():
     finally:
         db.close()
 
+
+api_router = APIRouter()
+api_router.include_router(
+    users.router,
+    prefix="/users",
+    tags=["users"],
+)
+
+app.include_router(api_router)
 
 @app.get("/")
 def index():
