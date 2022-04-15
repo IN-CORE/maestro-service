@@ -40,9 +40,13 @@ class User(UserBase):
 
 
 class StepBase(BaseModel):
-    step_id: int
-    substep_id: int
+    step_id: str
+    substep_id: str
     status: str
+
+
+class Step(StepBase):
+    id: int
 
 
 class StepCreated(StepBase):

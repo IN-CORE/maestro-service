@@ -1,9 +1,9 @@
 from fastapi import FastAPI, APIRouter
 
-from app.db.database import engine, SessionLocal, Base
+from app.db.database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import users, roles
+from app.routers import users, roles, steps
 
 app = FastAPI(title="Maestro API")
 app.add_middleware(
@@ -31,6 +31,11 @@ api_router.include_router(
     roles.router,
     prefix="/roles",
     tags=["roles"],
+)
+api_router.include_router(
+    steps.router,
+    prefix="/steps",
+    tags=["steps"],
 )
 
 app.include_router(api_router)
