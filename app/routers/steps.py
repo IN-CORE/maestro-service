@@ -10,7 +10,7 @@ from app.db.database import get_db
 router = APIRouter()
 
 
-@router.get("", response_model=list[schemas.Step])
+@router.get("", response_model=list[schemas.StepBase])
 def read_steps(db: Session = Depends(get_db)):
     steps = StepCRUD.get_steps(db)
     return steps

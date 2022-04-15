@@ -1,13 +1,13 @@
-from sqlalchemy import Column, Integer, Enum, String, UniqueConstraint
-
+from sqlalchemy import Column, UniqueConstraint
+from sqlalchemy.types import Integer, Enum, String
 from app.db.database import Base
-import enum
+# import enum
 
 
-class StatusEnum(enum.Enum):
-    pending = "Pending"
-    in_progress = "In-Progress"
-    complete = "Complete"
+# class StatusEnum(enum.Enum):
+#     pending = "Pending"
+#     in_progress = "In-Progress"
+#     complete = "Complete"
 
 
 class Step(Base):
@@ -20,4 +20,4 @@ class Step(Base):
 
     __table_args__ = (UniqueConstraint("step_id", 'substep_id', name='_step_substep_id'),)
 
-    status = Column(Enum(StatusEnum))
+    status = Column(Enum("Pending", "In-Progress", "Complete", name="_status_enum"))
