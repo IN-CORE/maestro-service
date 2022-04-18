@@ -54,7 +54,3 @@ class Step(StepBase):
 
 class StepCreated(StepBase):
     pass
-
-
-class StepUpdated(BaseModel):
-    status: str
