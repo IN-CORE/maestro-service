@@ -4,7 +4,7 @@ Service to manage playbooks
 ## Configuration Guide
 
 ### Pre-requisites
-- Python 3.8 or 3.9
+- Python 3.9
 - Install poetry: `pip install poetry`
 
 ### Run

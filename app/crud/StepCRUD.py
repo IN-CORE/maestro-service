@@ -14,10 +14,13 @@ def get_steps(db: Session):
 
 
 def create_step(db: Session, step: schemas.StepCreated):
-    db_step = Step(**step.dict())
-    db.add(db_step)
-    db.commit()
-    db.refresh(db_step)
+    try:
+        db_step = Step(**step.dict())
+        db.add(db_step)
+        db.commit()
+        db.refresh(db_step)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=e.args[0])
     return db_step
 
 
