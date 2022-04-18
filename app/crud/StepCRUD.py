@@ -24,12 +24,12 @@ def create_step(db: Session, step: schemas.StepCreated):
     return db_step
 
 
-def update_step(db:Session, step_id: str, substep_id: str, status: str):
+def update_step(db:Session, step_id: str, substep_id: str, step: schemas.StepUpdated):
     if (
         db_step := db.query(Step).filter(Step.step_id == step_id and Step.substep_id == substep_id).first()
     ) is not None:
         try:
-            db_step.update({"status": status})
+            db_step.update(step)
             db.commit()
             db.refresh(db_step)
         except Exception as e:

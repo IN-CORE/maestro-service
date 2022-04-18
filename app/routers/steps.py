@@ -10,7 +10,7 @@ from app.db.database import get_db
 router = APIRouter()
 
 
-@router.get("", response_model=list[schemas.StepBase])
+@router.get("", response_model=list[schemas.Step])
 def read_steps(db: Session = Depends(get_db)):
     steps = StepCRUD.get_steps(db)
     return steps
@@ -24,13 +24,12 @@ def read_step(step_id: str, substep_id: str, db: Session = Depends(get_db)):
     return db_step
 
 
-@router.post("", response_model=schemas.StepCreated)
+@router.post("", response_model=schemas.Step)
 def create_step(step: schemas.StepCreated, db: Session = Depends(get_db)
 ):
     return StepCRUD.create_step(db, step)
 
 
-@router.patch("/{step_id}/{substep_id}", response_model=schemas.StepUpdated)
-def update_step_status(step_id: str, substep_id: str, step: schemas.StepCreated, db: Session = Depends(get_db)
-):
-    return StepCRUD.update_step(db, step_id, substep_id)
+@router.patch("/{step_id}/{substep_id}", response_model=schemas.Step)
+def update_step_status(step_id: str, substep_id: str, step: schemas.StepUpdated, db: Session = Depends(get_db)):
+    return StepCRUD.update_step(db, step_id, substep_id, step)

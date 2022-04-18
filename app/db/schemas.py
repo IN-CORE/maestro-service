@@ -48,6 +48,9 @@ class StepBase(BaseModel):
 class Step(StepBase):
     id: int
 
+    class Config:
+        orm_mode = True
+
 
 class StepCreated(StepBase):
     pass
