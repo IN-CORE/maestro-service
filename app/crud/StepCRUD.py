@@ -37,3 +37,16 @@ def update_step(db:Session, step_id: str, substep_id: str, status: str):
             raise HTTPException(status_code=500, detail=e.args[0])
         return db_step
     raise HTTPException(status_code=404, detail=f"Step {step_id}/{substep_id} not found")
+
+
+def delete_step(db:Session, step_id: str, substep_id: str):
+    if (
+        db_step := db.query(Step).filter(and_(Step.step_id == step_id,Step.substep_id == substep_id)).first()
+    ) is not None:
+        try:
+            db.delete(db_step)
+            db.commit()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=e.args[0])
+        return db_step
+    raise HTTPException(status_code=404, detail=f"Step {step_id}/{substep_id} not found")

@@ -33,3 +33,8 @@ def create_step(step: schemas.StepCreated, db: Session = Depends(get_db)
 @router.patch("/{step_id}/{substep_id}", response_model=schemas.Step)
 def update_step_status(step_id: str, substep_id: str, status: str, db: Session = Depends(get_db)):
     return StepCRUD.update_step(db, step_id, substep_id, status)
+
+
+@router.delete("/{step_id}/{substep_id}", response_model=schemas.Step)
+def delete_step(step_id: str, substep_id: str, db: Session = Depends(get_db)):
+    return StepCRUD.delete_step(db, step_id, substep_id)
