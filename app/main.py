@@ -44,6 +44,6 @@ api_router.include_router(
 app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 
 
-@app.get("/")
+@app.get("/maestro")
 def index():
     return {"message": "Welcome to Maestro service"}
