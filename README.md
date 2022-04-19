@@ -11,6 +11,21 @@ Service to manage playbooks
 Install packages:
 `poetry install`
 
+### Setup Environment
+
+Look at env-example for an example environment file and update parameters with your database settings.
+For example:
+
+```
+#!/bin/bash
+
+export POSTGRES_SERVER=localhost
+export POSTGRES_USER=maestro
+export POSTGRES_PASSWORD=maestro
+export POSTGRES_DB=maestro
+export POSTGRES_PORT=5432
+```
+
 Run:
 `uvicorn app.main:app --reload`
 
