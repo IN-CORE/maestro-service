@@ -1,9 +1,12 @@
 from fastapi import FastAPI, APIRouter
 
+from app.core.config import get_settings
 from app.db.database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import users, roles, steps
+
+settings = get_settings()
 
 app = FastAPI(title="Maestro API")
 app.add_middleware(
@@ -38,7 +41,7 @@ api_router.include_router(
     tags=["steps"],
 )
 
-app.include_router(api_router)
+app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 
 
 @app.get("/")

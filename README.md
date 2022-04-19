@@ -24,6 +24,7 @@ export POSTGRES_USER=maestro
 export POSTGRES_PASSWORD=maestro
 export POSTGRES_DB=maestro
 export POSTGRES_PORT=5432
+export ROUTER_PREFIX=/maestro
 ```
 
 Run:
