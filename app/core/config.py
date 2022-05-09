@@ -6,9 +6,11 @@ from pydantic import PostgresDsn, validator
 
 
 class Settings(BaseSettings):
+
     main_path: str = os.path.abspath(os.path.dirname(__file__))
     routers_path: str = os.path.join(main_path, "../routers")
 
+    ROUTER_PREFIX: str
     PROJECT_NAME: str
     SERVER_NAME: str
     POSTGRES_SERVER: str

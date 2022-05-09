@@ -4,7 +4,7 @@ Service to manage playbooks
 ## Configuration Guide
 
 ### Pre-requisites
-- Python 3.8 or 3.9
+- Python 3.9
 - Install poetry: `pip install poetry`
 
 ### Run
@@ -24,6 +24,7 @@ export POSTGRES_USER=maestro
 export POSTGRES_PASSWORD=maestro
 export POSTGRES_DB=maestro
 export POSTGRES_PORT=5432
+export ROUTER_PREFIX=/maestro
 ```
 
 Run:
