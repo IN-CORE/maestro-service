@@ -1,40 +1,40 @@
 from fastapi import APIRouter, HTTPException, Depends
-
-from app.crud import StepCRUD
 from app.db import schemas
-
 from sqlalchemy.orm import Session
+from typing import Any
 
 from app.db.database import get_db
+from app import crud
 
 router = APIRouter()
 
 
 @router.get("", response_model=list[schemas.Step])
-def read_steps(db: Session = Depends(get_db)):
-    steps = StepCRUD.get_steps(db)
+def read_steps(db: Session = Depends(get_db)) -> Any:
+    steps = crud.stepCRUD.get_all(db)
     return steps
 
 
 @router.get("/{step_id}/{substep_id}", response_model=schemas.Step)
-def read_step(step_id: str, substep_id: str, db: Session = Depends(get_db)):
-    db_step = StepCRUD.get_step(db, step_id, substep_id)
+def read_step(step_id: str, substep_id: str, db: Session = Depends(get_db)) -> Any:
+    db_step = crud.stepCRUD.get_step(db, id=step_id, substep_id=substep_id)
     if db_step is None:
         raise HTTPException(status_code=404, detail="Step/SubStep not found")
     return db_step
 
 
 @router.post("", response_model=schemas.Step)
-def create_step(step: schemas.StepCreated, db: Session = Depends(get_db)
-):
-    return StepCRUD.create_step(db, step)
+def create_step(step: schemas.StepCreate, db: Session = Depends(get_db)) -> Any:
+
+    new_step = crud.stepCRUD.create(db, obj_in=step)
+    return new_step
 
 
 @router.patch("/{step_id}/{substep_id}", response_model=schemas.Step)
 def update_step_status(step_id: str, substep_id: str, status: str, db: Session = Depends(get_db)):
-    return StepCRUD.update_step(db, step_id, substep_id, status)
+    return crud.stepCRUD.update_step(db, id=step_id, substep_id=substep_id, status=status)
 
 
 @router.delete("/{step_id}/{substep_id}", response_model=schemas.Step)
 def delete_step(step_id: str, substep_id: str, db: Session = Depends(get_db)):
-    return StepCRUD.delete_step(db, step_id, substep_id)
+    return crud.stepCRUD.delete_step(db, step_id, substep_id)

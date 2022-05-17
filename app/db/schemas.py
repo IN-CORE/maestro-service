@@ -52,5 +52,10 @@ class Step(StepBase):
         orm_mode = True
 
 
-class StepCreated(StepBase):
+class StepCreate(StepBase):
     pass
+
+
+class StepUpdate(StepBase):
+    status: str
+
