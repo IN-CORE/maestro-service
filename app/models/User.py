@@ -12,6 +12,6 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     is_active = Column(Boolean, default=True)
 
-    # role_id = Column(Integer, ForeignKey("userroles.id"))
+    role_id = Column(Integer, ForeignKey("userroles.id"))
 
-    # roles = relationship("Role", primaryjoin="User.role_id == Role.id")
+    role = relationship("Role", back_populates="user_role")

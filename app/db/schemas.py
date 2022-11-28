@@ -40,7 +40,9 @@ class UserUpdate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    roles: list[Role] = []
+    # hide it from the response model
+    # role_id: int = None
+    role: Role = None
 
     class Config:
         orm_mode = True

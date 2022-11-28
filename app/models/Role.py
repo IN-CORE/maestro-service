@@ -13,3 +13,5 @@ class Role(Base):
     name = Column(Enum("leader", "member", name="_role_enum"), unique=True, index=True)
     description = Column(String)
 
+    user_role = relationship("User", back_populates="role")
+
