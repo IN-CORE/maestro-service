@@ -12,6 +12,10 @@ class RoleCreate(RoleBase):
     pass
 
 
+class RoleUpdate(RoleBase):
+    pass
+
+
 class Role(RoleBase):
     id: int
     user_id: int
@@ -27,6 +31,10 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
+    pass
+
+
+class UserUpdate(UserBase):
     pass
 
 
