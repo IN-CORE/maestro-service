@@ -21,7 +21,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.userCRUD.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.userCRUD.create(db=db, user=user)
+    return crud.userCRUD.create(db, obj_in=user)
 
 
 @router.get("/{user_id}", response_model=schemas.User)
@@ -34,7 +34,7 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{user_id}", response_model=schemas.User)
 def delete_user(user_id: int, db: Session = Depends(get_db)):
-    db_user = crud.userCRUD.remove(db, user_id)
+    db_user = crud.userCRUD.remove(db, id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found and cannot be deleted")
     return db_user

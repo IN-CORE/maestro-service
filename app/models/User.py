@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from app.db.database import Base
@@ -12,6 +12,6 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     is_active = Column(Boolean, default=True)
 
-    role = relationship("Role")
+    # role_id = Column(Integer, ForeignKey("userroles.id"))
 
-
+    # roles = relationship("Role", primaryjoin="User.role_id == Role.id")
