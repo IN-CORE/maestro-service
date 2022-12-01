@@ -9,6 +9,8 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
+    firstName = Column(String)
+    lastName = Column(String)
     email = Column(String, unique=True, index=True)
     is_active = Column(Boolean, default=True)
 

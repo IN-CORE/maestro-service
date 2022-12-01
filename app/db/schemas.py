@@ -27,6 +27,8 @@ class Role(RoleBase):
 class UserBase(BaseModel):
     username: str
     email: str
+    firstName: str
+    lastName: str
 
 
 class UserCreate(UserBase):
