@@ -33,3 +33,16 @@ Run:
 You should be able to run: 
 http://localhost:8000/ for base route that return welcome message
 http://localhost:8000/docs for swagger docs
+
+## Docker
+
+### Build Docker container
+
+docker build --tag incore/maestro-service:latest .
+
+### Run Docker container
+See Setup Environment section for populating the example-env
+
+To run the container:
+docker run -p 8000:8000 --env-file env-example incore/maestro-service:latest
+
