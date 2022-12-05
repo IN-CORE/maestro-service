@@ -36,7 +36,6 @@ class Settings(BaseSettings):
             host=values.get("POSTGRES_SERVER"),
             port=values.get("POSTGRES_PORT"),
             db_name=values.get("POSTGRES_DB"),
-            # db_url=f"postgresql://%s:%s@%s:%s/%s" % (user, passsowrd, host, port, db_name),
             path=f"/{db_name}",
         )
 
