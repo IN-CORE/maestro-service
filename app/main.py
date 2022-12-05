@@ -48,6 +48,12 @@ app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 def index():
     return {"message": "Welcome to Maestro service"}
 
+# liveness test
+@app.get("/maestro/alive")
+def index():
+    return {"message": "Welcome to Maestro service"}
+
+# database connection test
 @app.get("/maestro/db_test")
 def db_test():
     engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
