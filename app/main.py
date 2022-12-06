@@ -23,7 +23,6 @@ app.add_middleware(
 # create tables if they don't exist - Probably shouldn't happen once alembic does the migration
 Base.metadata.create_all(engine)
 
-
 api_router = APIRouter()
 api_router.include_router(
     users.router,
