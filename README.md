@@ -20,7 +20,7 @@ For example:
 #!/bin/bash
 
 export POSTGRES_SERVER=localhost
-export POSTGRES_USER=maestro
+export POSTGRES_USER=posgres
 export POSTGRES_PASSWORD=maestro
 export POSTGRES_DB=maestro
 export POSTGRES_PORT=5432
