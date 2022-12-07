@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
+from datetime import datetime
 
 
 # Role model
@@ -54,10 +55,13 @@ class StepBase(BaseModel):
     step_id: str
     substep_id: str
     status: str
+    updated_at: datetime
+    user_id: Optional[int]
 
 
 class Step(StepBase):
     id: int
+    user: Optional[User]
 
     class Config:
         orm_mode = True

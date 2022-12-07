@@ -1,7 +1,12 @@
+from typing import TYPE_CHECKING, List
+
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 from app.db.database import Base
+
+if TYPE_CHECKING:
+    from app.models import Step
 
 
 class User(Base):
@@ -17,3 +22,4 @@ class User(Base):
     role_id = Column(Integer, ForeignKey("userroles.id"))
 
     role = relationship("Role", back_populates="user_role")
+    step_user: List["Step"] = relationship("Step", back_populates="user")

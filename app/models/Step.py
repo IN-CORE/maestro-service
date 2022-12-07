@@ -1,14 +1,19 @@
-from sqlalchemy import Column, UniqueConstraint
+from datetime import datetime  # noqa
+from typing import TYPE_CHECKING
+
+from sqlalchemy import Column, UniqueConstraint, ForeignKey, DateTime
 from sqlalchemy.types import Integer, Enum, String
 from app.db.database import Base
-# import enum
+from sqlalchemy.orm import relationship
+import enum
 
+if TYPE_CHECKING:
+    from app.models import User
 
-# class StatusEnum(enum.Enum):
-#     pending = "Pending"
-#     in_progress = "In-Progress"
-#     complete = "Complete"
-
+class StatusEnum(str, enum.Enum):
+    pending = "pending"
+    in_progress = "in_progress"
+    complete = "complete"
 
 class Step(Base):
     __tablename__ = "steps"
@@ -17,7 +22,9 @@ class Step(Base):
 
     step_id = Column(String, nullable=False)
     substep_id = Column(String, nullable=False)
-
     __table_args__ = (UniqueConstraint("step_id", 'substep_id', name='_step_substep_id'),)
+    status = Column(Enum(StatusEnum, name="_status_enum"))
+    updated_at: datetime = Column(DateTime, default=datetime.now())
+    user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
 
-    status = Column(Enum("Pending", "In-Progress", "Complete", name="_status_enum"))
+    user: "User" = relationship("User", back_populates="step_user")
