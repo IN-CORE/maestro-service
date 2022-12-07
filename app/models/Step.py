@@ -18,13 +18,13 @@ class StatusEnum(str, enum.Enum):
 class Step(Base):
     __tablename__ = "steps"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id: int = Column(Integer, primary_key=True, index=True)
 
-    step_id = Column(String, nullable=False)
-    substep_id = Column(String, nullable=False)
-    __table_args__ = (UniqueConstraint("step_id", 'substep_id', name='_step_substep_id'),)
-    status = Column(Enum(StatusEnum, name="_status_enum"))
+    step_id: str = Column(String, nullable=False)
+    substep_id: str = Column(String, nullable=False)
+    status: str = Column(Enum(StatusEnum, name="_status_enum"))
     updated_at: datetime = Column(DateTime, default=datetime.now())
     user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
 
+    __table_args__ = (UniqueConstraint("step_id", 'substep_id', name='_step_substep_id'),)
     user: "User" = relationship("User", back_populates="step_user")

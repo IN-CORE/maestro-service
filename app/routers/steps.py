@@ -38,7 +38,13 @@ def create_step(step_id: str, substep_id: str, status: StatusEnum, db: Session =
 
 
 @router.patch("/{step_id}/{substep_id}", response_model=schemas.Step)
-def update_step_status(step_id: str, substep_id: str, status: StatusEnum, x_auth_userinfo: Union[str, None] = Header(None), db: Session = Depends(get_db)):
+def update_step_status(
+    step_id: str, 
+    substep_id: str, 
+    status: StatusEnum, 
+    x_auth_userinfo: Union[str, None] = Header(None), 
+    db: Session = Depends(get_db)
+) -> Any:
     try:
         user_name = json.loads(x_auth_userinfo)["preferred_username"]
     except:
@@ -50,5 +56,5 @@ def update_step_status(step_id: str, substep_id: str, status: StatusEnum, x_auth
 
 
 @router.delete("/{step_id}/{substep_id}", response_model=schemas.Step)
-def delete_step(step_id: str, substep_id: str, db: Session = Depends(get_db)):
+def delete_step(step_id: str, substep_id: str, db: Session = Depends(get_db)) -> Any:
     return crud.stepCRUD.delete_step(db, step_id, substep_id)

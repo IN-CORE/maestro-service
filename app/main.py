@@ -8,7 +8,7 @@ from app.routers import users, roles, steps
 
 settings = get_settings()
 
-app = FastAPI(title="Maestro API")
+app = FastAPI(title=settings.SERVER_NAME)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
