@@ -10,8 +10,8 @@ router = APIRouter()
 
 
 @router.get("", response_model=list[schemas.Step])
-def read_steps(db: Session = Depends(get_db)) -> Any:
-    steps = crud.stepCRUD.get_all(db)
+def read_steps(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)) -> Any:
+    steps = crud.stepCRUD.get_multi(db, skip, limit)
     return steps
 
 

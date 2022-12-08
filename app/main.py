@@ -23,7 +23,6 @@ app.add_middleware(
 # create tables if they don't exist - Probably shouldn't happen once alembic does the migration
 Base.metadata.create_all(engine)
 
-
 api_router = APIRouter()
 api_router.include_router(
     users.router,
@@ -47,6 +46,7 @@ app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 @app.get("/maestro")
 def index():
     return {"message": "Welcome to Maestro service"}
+
 
 # liveness test
 @app.get("/maestro/alive")

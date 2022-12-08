@@ -67,7 +67,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         List[ModelType]
             A list of SQLAlchemy model instances from the query.
         """
-        return db.query(self.model).offset(skip).limit(limit).all()
+        return db.query(self.model).order_by(self.model.id.asc()).offset(skip).limit(limit).all()
 
     def get_all(self, db: Session) -> List[ModelType]:
         """Get all records from the database.
@@ -82,7 +82,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         List[ModelType]
             A list of SQLAlchemy model instances from the query.
         """
-        return db.query(self.model).all()
+        return db.query(self.model).order_by(self.model.id.asc()).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
         """Create a new record in the database.

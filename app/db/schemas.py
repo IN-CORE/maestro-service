@@ -12,9 +12,12 @@ class RoleCreate(RoleBase):
     pass
 
 
+class RoleUpdate(RoleBase):
+    pass
+
+
 class Role(RoleBase):
     id: int
-    user_id: int
 
     class Config:
         orm_mode = True
@@ -24,16 +27,24 @@ class Role(RoleBase):
 class UserBase(BaseModel):
     username: str
     email: str
+    firstName: str
+    lastName: str
 
 
 class UserCreate(UserBase):
     pass
 
 
+class UserUpdate(UserBase):
+    pass
+
+
 class User(UserBase):
     id: int
     is_active: bool
-    roles: list[Role] = []
+    # hide it from the response model
+    # role_id: int = None
+    role: Role = None
 
     class Config:
         orm_mode = True

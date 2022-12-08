@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.crud import crud
+from app import crud
 from app.db import schemas
 
 from sqlalchemy.orm import Session
@@ -11,29 +11,37 @@ router = APIRouter()
 
 
 @router.get("", response_model=list[schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_users(db, skip=skip, limit=limit)
+def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = crud.userCRUD.get_multi(db, skip=skip, limit=limit)
     return users
 
 
 @router.post("", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_email(db, email=user.email)
+    db_user = crud.userCRUD.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_user(db=db, user=user)
+    return crud.userCRUD.create(db, obj_in=user)
 
 
 @router.get("/{user_id}", response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_user(db, user_id=user_id)
+def get_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.userCRUD.get(db, user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
 
-@router.post("/{user_id}/roles/", response_model=schemas.Role)
-def create_role_for_user(
-        user_id: int, role: schemas.RoleCreate, db: Session = Depends(get_db)
+@router.delete("/{user_id}", response_model=schemas.User)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = crud.userCRUD.remove(db, id=user_id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found and cannot be deleted")
+    return db_user
+
+
+@router.post("/{user_id}/roles/{role_id}", response_model=schemas.User)
+def attach_role_to_user(
+        user_id: int, role_id: int, db: Session = Depends(get_db)
 ):
-    return crud.create_user_role(db=db, role=role, user_id=user_id)
+    return crud.userCRUD.attach_user_role(db=db, user_id=user_id, role_id=role_id)
