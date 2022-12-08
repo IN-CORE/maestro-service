@@ -40,6 +40,7 @@ api_router.include_router(
     tags=["steps"],
 )
 
+testbed = settings.TESTBED
 app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 
 
@@ -49,13 +50,14 @@ def index():
 
 
 # liveness test
-@app.get("/maestro/alive")
+@app.get("/maestro/{testbed}/alive")
 def index():
+    print(testbed)
     return {"message": "Welcome to Maestro service"}
 
 # database connection test
-@app.get("/maestro/db_test")
+@app.get("/maestro/{testbed}/db_test")
 def db_test():
     engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
-    print(engine)
+    print(testbed)
     return {"message": "The database connected successfully"}
