@@ -6,10 +6,7 @@ from app.models import User, Role
 from sqlalchemy.orm import Session
 
 
-class UserCRUD(
-    CRUDBase[User, UserCreate, UserUpdate]
-):
-
+class UserCRUD(CRUDBase[User, UserCreate, UserUpdate]):
     def get_user_by_email(self, db: Session, email: str) -> User:
         return db.query(User).filter(User.email == email).first()
 

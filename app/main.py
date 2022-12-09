@@ -1,9 +1,9 @@
 from fastapi import FastAPI, APIRouter
+from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import create_engine
 
 from app.core.config import get_settings
 from app.db.database import engine, Base
-from fastapi.middleware.cors import CORSMiddleware
-
 from app.routers import users, roles, steps
 
 settings = get_settings()
@@ -22,7 +22,6 @@ app.add_middleware(
 )
 # create tables if they don't exist - Probably shouldn't happen once alembic does the migration
 Base.metadata.create_all(engine)
-
 
 api_router = APIRouter()
 api_router.include_router(
@@ -47,3 +46,17 @@ app.include_router(api_router, prefix=settings.ROUTER_PREFIX)
 @app.get("/maestro")
 def index():
     return {"message": "Welcome to Maestro service"}
+
+
+# liveness test
+@app.get("/maestro/alive")
+def index():
+    return {"message": "Welcome to Maestro service"}
+
+
+# database connection test
+@app.get("/maestro/db_test")
+def db_test():
+    engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
+    print(engine)
+    return {"message": "The database connected successfully"}

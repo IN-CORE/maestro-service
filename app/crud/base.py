@@ -1,13 +1,4 @@
-from typing import (
-    Any,
-    Dict,
-    Generic,
-    List,
-    Optional,
-    Type,
-    TypeVar,
-    Union
-)
+from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -50,7 +41,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         return db.query(self.model).filter(self.model.id == id).first()
 
-    def get_multi(self, db: Session, *, skip: int = 0, limit: int = 100) -> List[ModelType]:
+    def get_multi(
+        self, db: Session, *, skip: int = 0, limit: int = 100
+    ) -> List[ModelType]:
         """Get multiple records from the database.
 
         Parameters
@@ -67,7 +60,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         List[ModelType]
             A list of SQLAlchemy model instances from the query.
         """
-        return db.query(self.model).order_by(self.model.id.asc()).offset(skip).limit(limit).all()
+        return (
+            db.query(self.model)
+            .order_by(self.model.id.asc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
     def get_all(self, db: Session) -> List[ModelType]:
         """Get all records from the database.
@@ -107,7 +106,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.refresh(db_obj)
         return db_obj
 
-    def update(self, db: Session, *, db_obj: ModelType, obj_in: Union[UpdateSchemaType, Dict[str, Any]]) -> ModelType:
+    def update(
+        self,
+        db: Session,
+        *,
+        db_obj: ModelType,
+        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
+    ) -> ModelType:
         """Update an existing record in the database.
 
         Parameters

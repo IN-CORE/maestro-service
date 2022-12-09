@@ -10,10 +10,12 @@ import enum
 if TYPE_CHECKING:
     from app.models import User
 
+
 class StatusEnum(str, enum.Enum):
     pending = "pending"
     in_progress = "in_progress"
     complete = "complete"
+
 
 class Step(Base):
     __tablename__ = "steps"
@@ -26,5 +28,7 @@ class Step(Base):
     updated_at: datetime = Column(DateTime, default=datetime.now())
     user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
 
-    __table_args__ = (UniqueConstraint("step_id", 'substep_id', name='_step_substep_id'),)
+    __table_args__ = (
+        UniqueConstraint("step_id", "substep_id", name="_step_substep_id"),
+    )
     user: "User" = relationship("User", back_populates="step_user")

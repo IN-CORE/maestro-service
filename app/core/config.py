@@ -1,8 +1,12 @@
 from pydantic import BaseSettings
 
 import os
+from dotenv import load_dotenv
 from typing import Any, Dict, Optional
 from pydantic import PostgresDsn, validator
+
+# Load .env file
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -32,6 +36,7 @@ class Settings(BaseSettings):
             password=values.get("POSTGRES_PASSWORD"),
             host=values.get("POSTGRES_SERVER"),
             port=values.get("POSTGRES_PORT"),
+            db_name=values.get("POSTGRES_DB"),
             path=f"/{db_name}",
         )
 

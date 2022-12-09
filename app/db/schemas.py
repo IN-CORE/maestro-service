@@ -73,4 +73,3 @@ class StepCreate(StepBase):
 
 class StepUpdate(StepBase):
     status: str
-

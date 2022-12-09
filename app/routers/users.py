@@ -37,12 +37,14 @@ def get_user(user_id: int, db: Session = Depends(get_db)) -> Any:
 def delete_user(user_id: int, db: Session = Depends(get_db)) -> Any:
     db_user = crud.userCRUD.remove(db, id=user_id)
     if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found and cannot be deleted")
+        raise HTTPException(
+            status_code=404, detail="User not found and cannot be deleted"
+        )
     return db_user
 
 
 @router.post("/{user_id}/roles/{role_id}", response_model=schemas.User)
 def attach_role_to_user(
-        user_id: int, role_id: int, db: Session = Depends(get_db)
+    user_id: int, role_id: int, db: Session = Depends(get_db)
 ) -> Any:
     return crud.userCRUD.attach_user_role(db=db, user_id=user_id, role_id=role_id)

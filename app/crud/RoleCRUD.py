@@ -3,9 +3,7 @@ from app.crud.base import CRUDBase
 from app.models import Role
 
 
-class RoleCRUD(
-    CRUDBase[Role, RoleCreate, RoleUpdate]
-):
+class RoleCRUD(CRUDBase[Role, RoleCreate, RoleUpdate]):
     ...
 
 

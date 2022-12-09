@@ -10,9 +10,16 @@ from app.db.database import Base
 if TYPE_CHECKING:
     from app.models import User
 
+
 class RoleEnum(str, enum.Enum):
     leader = "leader"
     member = "member"
+
+
+class RoleEnum(str, enum.Enum):
+    leader = "leader"
+    member = "member"
+
 
 class Role(Base):
     __tablename__ = "userroles"
