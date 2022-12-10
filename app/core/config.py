@@ -8,6 +8,7 @@ from pydantic import PostgresDsn, validator
 # Load .env file
 load_dotenv()
 
+
 class Settings(BaseSettings):
 
     main_path: str = os.path.abspath(os.path.dirname(__file__))

@@ -8,7 +8,7 @@ from app.routers import users, roles, steps
 
 settings = get_settings()
 
-app = FastAPI(title="Maestro API")
+app = FastAPI(title=settings.SERVER_NAME)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -54,6 +54,7 @@ def index():
 def index():
     print(testbed)
     return {"message": "Welcome to Maestro service"}
+
 
 # database connection test
 @app.get("/maestro/{testbed}/db_test")

@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING, List
 from sqlalchemy.types import Enum
 import enum
 
@@ -6,17 +7,25 @@ from sqlalchemy.orm import relationship
 
 from app.db.database import Base
 
+if TYPE_CHECKING:
+    from app.models import User
+
 
 class RoleEnum(str, enum.Enum):
     leader = "leader"
     member = "member"
 
+
+class RoleEnum(str, enum.Enum):
+    leader = "leader"
+    member = "member"
+
+
 class Role(Base):
     __tablename__ = "userroles"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(Enum(RoleEnum, name="_role_enum"), unique=True, index=True)
-    description = Column(String)
+    id: str = Column(Integer, primary_key=True, index=True)
+    name: str = Column(Enum(RoleEnum, name="_role_enum"), unique=True, index=True)
+    description: str = Column(String)
 
-    user_role = relationship("User", back_populates="role")
-
+    user_role: List["User"] = relationship("User", back_populates="role")
