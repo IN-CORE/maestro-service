@@ -20,7 +20,8 @@ ENV POSTGRES_SERVER=localhost \
     POSTGRES_USER=maestro \
     POSTGRES_PASSWORD=maestro \
     POSTGRES_DB=maestro \
-    ROUTER_PREFIX="/maestro"
+    ROUTER_PREFIX="/maestro" \
+    TESTBED=slc
 
 CMD gunicorn -b 0.0.0.0:8000 -w ${WORKERS} -k uvicorn.workers.UvicornWorker app.main:app
 

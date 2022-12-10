@@ -22,6 +22,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str
     POSTGRES_DB: str
     POSTGRES_PORT: str
+    TESTBED: str
 
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
@@ -38,6 +39,7 @@ class Settings(BaseSettings):
             port=values.get("POSTGRES_PORT"),
             db_name=values.get("POSTGRES_DB"),
             path=f"/{db_name}",
+            testbed=values.get("TESTBED")
         )
 
 
