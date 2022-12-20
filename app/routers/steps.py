@@ -28,9 +28,30 @@ def read_step(step_id: str, substep_id: str, db: Session = Depends(get_db)) -> A
 
 @router.post("", response_model=schemas.Step)
 def create_step(
-    step_id: str, substep_id: str, status: StatusEnum, db: Session = Depends(get_db)
+        step_id: str,
+        substep_id: str,
+        status: StatusEnum,
+        x_auth_userinfo: Union[str, None] = Header(None),
+        db:Session = Depends(get_db)
 ) -> Any:
-    step = {"step_id": step_id, "substep_id": substep_id, "status": status.value}
+    try:
+        user_name = json.loads(x_auth_userinfo)["preferred_username"]
+    except:
+        raise HTTPException(status_code=400, detail="Invalid user group header!")
+
+    db_user = crud.userCRUD.get_user_by_username(db, user_name)
+    if db_user is None:
+        raise HTTPException(
+            status_code=404, detail=f"User not found with Username: {user_name}"
+        )
+    status_user_id = db_user.id
+    status_updated_at = datetime.now()
+    step = {"step_id": step_id,
+            "substep_id": substep_id,
+            "status": status.value,
+            "status_user_id": status_user_id,
+            "status_updated_at":status_updated_at,
+    }
     new_step = crud.stepCRUD.create(db, obj_in=step)
     return new_step
 

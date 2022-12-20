@@ -27,7 +27,7 @@ class Step(Base):
     status: str = Column(Enum(StatusEnum, name="_status_enum"))
     doc_uri: str = Column(String, nullable=True)
     status_updated_at: datetime = Column(DateTime, default=datetime.now())
-    doc_updated_at: datetime = Column(DateTime, default=datetime.now())
+    doc_updated_at: datetime = Column(DateTime)
     status_user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
     doc_user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
 
