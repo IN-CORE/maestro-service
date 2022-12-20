@@ -76,4 +76,6 @@ class StepCreate(StepBase):
 
 
 class StepUpdate(StepBase):
-    status: str
+    status: Optional[str]
+    doc_uri: Optional[str]
+

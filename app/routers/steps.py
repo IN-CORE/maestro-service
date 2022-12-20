@@ -60,8 +60,8 @@ def create_step(
 def update_step_status(
     step_id: str,
     substep_id: str,
-    status: Optional[StatusEnum],
-    doc_uri: Optional[str],
+    status: Union[StatusEnum, None] = None,
+    doc_uri: Union[str, None] = None,
     x_auth_userinfo: Union[str, None] = Header(None),
     db: Session = Depends(get_db),
 ) -> Any:
@@ -75,30 +75,27 @@ def update_step_status(
             status_code=404, detail=f"User not found with Username: {user_name}"
         )
 
-    status_user_id = None
-    doc_user_id = None
-    status_updated_at = None
-    doc_updated_at = None
-
     if status is not None:
-        status_user_id = db_user.id
-        status_updated_at = datetime.now()
+        return crud.stepCRUD.update_step(
+            db,
+            id=step_id,
+            substep_id=substep_id,
+            status=status.value,
+            status_user_id=db_user.id,
+            status_updated_at=datetime.now(),
+        )
 
     if doc_uri is not None:
-        doc_user_id = db_user.id
-        doc_updated_at = datetime.now()
+        return crud.stepCRUD.update_step(
+            db,
+            id=step_id,
+            substep_id=substep_id,
+            doc_uri=doc_uri,
+            doc_user_id=db_user.id,
+            doc_updated_at=datetime.now(),
+        )
 
-    return crud.stepCRUD.update_step(
-        db,
-        id=step_id,
-        substep_id=substep_id,
-        status=status.value,
-        status_user_id=status_user_id,
-        status_updated_at=status_updated_at,
-        doc_uri = doc_uri,
-        doc_user_id = doc_user_id,
-        doc_updated_at= doc_updated_at,
-    )
+
 
 
 @router.delete("/{step_id}/{substep_id}", response_model=schemas.Step)
