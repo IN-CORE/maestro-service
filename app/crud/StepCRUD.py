@@ -23,8 +23,11 @@ class StepCRUD(CRUDBase[Step, StepCreate, StepUpdate]):
         id: int,
         substep_id: str,
         status: str,
-        user_id: int,
-        updated_at: datetime,
+        status_user_id: int,
+        status_updated_at: datetime,
+        doc_uri: str,
+        doc_user_id: int,
+        doc_updated_at: datetime,
     ):
         if (
             db_step := db.query(Step)
@@ -33,8 +36,11 @@ class StepCRUD(CRUDBase[Step, StepCreate, StepUpdate]):
         ) is not None:
             try:
                 db_step.status = status
-                db_step.user_id = user_id
-                db_step.updated_at = updated_at
+                db_step.status_user_id = status_user_id
+                db_step.status_updated_at = status_updated_at
+                db_step.doc_uri = doc_uri
+                db_step.doc_user_id = doc_user_id
+                db_step.doc_updated_at = doc_updated_at
                 db.commit()
                 db.refresh(db_step)
             except Exception as e:
