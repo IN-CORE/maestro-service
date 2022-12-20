@@ -95,7 +95,9 @@ def update_step_status(
             doc_updated_at=datetime.now(),
         )
 
-
+    raise HTTPException(
+        status_code=400, detail=f"You have not updated any fields!"
+    )
 
 
 @router.delete("/{step_id}/{substep_id}", response_model=schemas.Step)
