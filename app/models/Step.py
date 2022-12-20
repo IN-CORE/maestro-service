@@ -32,5 +32,5 @@ class Step(Base):
     __table_args__ = (
         UniqueConstraint("step_id", "substep_id", name="_step_substep_id"),
     )
-    status_user: "User" = relationship("User", back_populates="step_status_user")
-    doc_user: "User" = relationship("User", back_populates="step_doc_user")
+    status_user: "User" = relationship("User", foreign_keys=[status_user_id])
+    doc_user: "User" = relationship("User", foreign_keys=[doc_user_id])
