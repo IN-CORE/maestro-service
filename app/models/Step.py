@@ -25,6 +25,7 @@ class Step(Base):
     step_id: str = Column(String, nullable=False)
     substep_id: str = Column(String, nullable=False)
     status: str = Column(Enum(StatusEnum, name="_status_enum"))
+    doc_uri: str = Column(String, nullable=True)
     status_updated_at: datetime = Column(DateTime, default=datetime.now())
     doc_updated_at: datetime = Column(DateTime, default=datetime.now())
     status_user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)

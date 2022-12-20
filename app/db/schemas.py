@@ -55,8 +55,9 @@ class StepBase(BaseModel):
     step_id: str
     substep_id: str
     status: str
-    status_updated_at: datetime
-    doc_updated_at: datetime
+    doc_uri: Optional[str]
+    status_updated_at: Optional[datetime]
+    doc_updated_at: Optional[datetime]
     status_user_id: Optional[int]
     doc_user_id: Optional[int]
 
