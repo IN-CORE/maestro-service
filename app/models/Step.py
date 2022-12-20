@@ -26,9 +26,11 @@ class Step(Base):
     substep_id: str = Column(String, nullable=False)
     status: str = Column(Enum(StatusEnum, name="_status_enum"))
     updated_at: datetime = Column(DateTime, default=datetime.now())
-    user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
+    status_user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
+    doc_user_id: int = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     __table_args__ = (
         UniqueConstraint("step_id", "substep_id", name="_step_substep_id"),
     )
-    user: "User" = relationship("User", back_populates="step_user")
+    status_user: "User" = relationship("User", back_populates="step_status_user")
+    doc_user: "User" = relationship("User", back_populates="step_doc_user")
