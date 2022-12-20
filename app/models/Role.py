@@ -16,16 +16,9 @@ class RoleEnum(str, enum.Enum):
     member = "member"
 
 
-class RoleEnum(str, enum.Enum):
-    leader = "leader"
-    member = "member"
-
-
 class Role(Base):
     __tablename__ = "userroles"
 
     id: str = Column(Integer, primary_key=True, index=True)
     name: str = Column(Enum(RoleEnum, name="_role_enum"), unique=True, index=True)
     description: str = Column(String)
-
-    user_role: List["User"] = relationship("User", back_populates="role")

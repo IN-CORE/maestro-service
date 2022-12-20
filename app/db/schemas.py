@@ -43,8 +43,6 @@ class UserUpdate(UserBase):
 class User(UserBase):
     id: int
     is_active: bool
-    # hide it from the response model
-    # role_id: int = None
     role: Role = None
 
     class Config:
@@ -58,8 +56,6 @@ class StepBase(BaseModel):
     doc_uri: Optional[str]
     status_updated_at: Optional[datetime]
     doc_updated_at: Optional[datetime]
-    status_user_id: Optional[int]
-    doc_user_id: Optional[int]
 
 
 class Step(StepBase):
