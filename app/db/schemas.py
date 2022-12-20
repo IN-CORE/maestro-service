@@ -55,13 +55,16 @@ class StepBase(BaseModel):
     step_id: str
     substep_id: str
     status: str
-    updated_at: datetime
-    user_id: Optional[int]
+    status_updated_at: datetime
+    doc_updated_at: datetime
+    status_user_id: Optional[int]
+    doc_user_id: Optional[int]
 
 
 class Step(StepBase):
     id: int
-    user: Optional[User]
+    status_user: Optional[User]
+    doc_user: Optional[User]
 
     class Config:
         orm_mode = True
