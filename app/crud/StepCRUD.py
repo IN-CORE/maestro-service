@@ -1,3 +1,5 @@
+from typing import Union
+
 from fastapi import HTTPException
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
@@ -22,9 +24,12 @@ class StepCRUD(CRUDBase[Step, StepCreate, StepUpdate]):
         db: Session,
         id: int,
         substep_id: str,
-        status: str,
-        user_id: int,
-        updated_at: datetime,
+        status: Union[str, None] = None,
+        status_user_id: Union[int, None] = None,
+        status_updated_at: Union[datetime, None] = None,
+        doc_uri: Union[str, None] = None,
+        doc_user_id: Union[int, None] = None,
+        doc_updated_at: Union[datetime, None] = None,
     ):
         if (
             db_step := db.query(Step)
@@ -32,9 +37,16 @@ class StepCRUD(CRUDBase[Step, StepCreate, StepUpdate]):
             .first()
         ) is not None:
             try:
-                db_step.status = status
-                db_step.user_id = user_id
-                db_step.updated_at = updated_at
+                if status:
+                    db_step.status = status
+                    db_step.status_user_id = status_user_id
+                    db_step.status_updated_at = status_updated_at
+
+                if doc_uri:
+                    db_step.doc_uri = doc_uri
+                    db_step.doc_user_id = doc_user_id
+                    db_step.doc_updated_at = doc_updated_at
+
                 db.commit()
                 db.refresh(db_step)
             except Exception as e:

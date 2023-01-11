@@ -20,5 +20,4 @@ class User(Base):
     is_active: bool = Column(Boolean, default=True)
     role_id: int = Column(Integer, ForeignKey("userroles.id"))
 
-    role: "Role" = relationship("Role", back_populates="user_role")
-    step_user: List["Step"] = relationship("Step", back_populates="user")
+    role: "Role" = relationship("Role", foreign_keys=[role_id])
