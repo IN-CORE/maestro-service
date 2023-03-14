@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [unreleased]
+## [1.0.0] - 2023-03-15
 
 ### Added
 - Dockerfile for building container. [#19](https://github.com/IN-CORE/maestro-service/issues/19)

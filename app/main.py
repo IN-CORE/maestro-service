@@ -52,7 +52,7 @@ def index():
 # liveness test
 @app.get("/maestro/{testbed}/alive")
 def index():
-    print(testbed)
+    # print(testbed)
     return {"message": "Welcome to Maestro service"}
 
 
@@ -60,5 +60,5 @@ def index():
 @app.get("/maestro/{testbed}/db_test")
 def db_test():
     engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
-    print(testbed)
+    # print(testbed)
     return {"message": "The database connected successfully"}
