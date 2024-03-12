@@ -1,28 +1,27 @@
 from typing import Optional
 
-from bson import ObjectId
 from fastapi import HTTPException
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 
-from app.db.schemas import RetrofitStrategy
+from app.db.schemas import RetrofitStrategy, RetrofitStrategyBase
 from app.models.RetrofitStrategyDetails import RetrofitStrategyDetails as RetrofitStrategyDetailsModel
 from app.crud.base import CRUDBase
 
 
-class DatasetCRUD(CRUDBase[RetrofitStrategyDetailsModel, RetrofitStrategy]):
+class DatasetCRUD(CRUDBase[RetrofitStrategyDetailsModel, RetrofitStrategyBase, RetrofitStrategy]):
     def get_rsdetails(self, db: Session, dataset_id: str) -> Optional[RetrofitStrategy]:
 
         return (
             db.query(RetrofitStrategyDetailsModel)
-            .filter(and_(RetrofitStrategyDetailsModel.dataset_id == ObjectId(dataset_id)))
+            .filter(and_(RetrofitStrategyDetailsModel.dataset_id == dataset_id))
             .first()
         )
 
     def delete_rsdetails(self, db: Session, dataset_id: str) -> Optional[RetrofitStrategy]:
         if (
             db_rsdetails := db.query(RetrofitStrategyDetailsModel)
-            .filter(and_(RetrofitStrategyDetailsModel.dataset_id == ObjectId(dataset_id)))
+            .filter(and_(RetrofitStrategyDetailsModel.dataset_id == dataset_id))
             .first()
         ) is not None:
             try:

@@ -1,6 +1,5 @@
 from typing import Optional
 
-from bson import ObjectId
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -79,12 +78,11 @@ class StepUpdate(StepBase):
 
 
 class RetrofitStrategyBase(BaseModel):
-    dataset_id: ObjectId
+    dataset_id: str
     total: dict
     by_rule: dict
 
 
 class RetrofitStrategy(RetrofitStrategyBase):
-    id: int
     class Config:
         orm_mode = True

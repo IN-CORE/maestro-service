@@ -1,5 +1,4 @@
-from bson import ObjectId
-from sqlalchemy import Column, JSON
+from sqlalchemy import Column, JSON, String
 
 from app.db.database import Base
 
@@ -33,7 +32,7 @@ class RetrofitStrategyDetails(Base):
        """
     __tablename__ = "rsdetails"
 
-    dataset_id: ObjectId = Column(ObjectId, primary_key=True, index=True)
+    dataset_id: str = Column(String, primary_key=True, index=True)
     total = Column(JSON)
     by_rule = Column(JSON)
 
