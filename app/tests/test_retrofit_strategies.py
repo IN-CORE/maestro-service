@@ -27,7 +27,19 @@ def test_post_retrofit_strategy_details():
                 "num_bldg_no_cost": 2,
                 "cost": 0
             }
-        }
+        },
+        "rules": {
+            "testbed": "galveston",
+            "rules": 3,
+            "zones": ["1P", "1P", "0.2P"],
+            "strtypes": ["1", "2", "1"],
+            "pcts": [1, 1, 1]
+        },
+        "retrofits": {
+            "ret_keys": ["elevation", "elevation", "elevation"],
+            "ret_vals": [5, 10, 5]
+        },
+        "rsDetailsLayerId": "dummy_layer_id"
     }
 
     response = requests.post(f"{API_V2_STR}/maestro/datasets/{dataset_id}/rsdetails", json=rsdetails)

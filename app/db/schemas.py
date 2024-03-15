@@ -81,6 +81,9 @@ class RetrofitStrategyBase(BaseModel):
     dataset_id: str
     total: dict
     by_rule: dict
+    rules: dict
+    retrofits: dict
+    rsDetailsLayerId: str
 
 
 class RetrofitStrategy(RetrofitStrategyBase):
