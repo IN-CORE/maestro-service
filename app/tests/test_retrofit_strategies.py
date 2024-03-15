@@ -63,8 +63,15 @@ def test_get_retrofit_strategy_details():
     assert response_data['dataset_id'] == dataset_id
     assert 'total' in response_data
     assert 'by_rule' in response_data
+    assert 'rules' in response_data
+    assert 'retrofits' in response_data
+    assert 'rsDetailsLayerId' in response_data
     assert response_data['total']['num_bldg'] == 3283
     assert response_data['by_rule']['1']['num_bldg'] == 90
+    assert response_data['rules']['testbed'] == "galveston"
+    assert response_data['retrofits']['ret_keys'][0] == "elevation"
+    assert response_data['retrofits']['ret_vals'][0] == 5
+    assert response_data['rsDetailsLayerId'] == "dummy_layer_id"
 
 
 def test_delete_retrofit_strategy_details():
