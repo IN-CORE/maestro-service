@@ -1,4 +1,5 @@
 from typing import Optional
+
 from pydantic import BaseModel
 from datetime import datetime
 
@@ -75,3 +76,16 @@ class StepUpdate(StepBase):
     status: Optional[str]
     doc_uri: Optional[str]
 
+
+class RetrofitStrategyBase(BaseModel):
+    dataset_id: str
+    total: dict
+    by_rule: dict
+    rules: dict
+    retrofits: dict
+    rsDetailsLayerId: str
+
+
+class RetrofitStrategy(RetrofitStrategyBase):
+    class Config:
+        orm_mode = True

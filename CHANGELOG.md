@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## [Unreleased]
+
+### Added 
+-  Endpoint to read, write and delete retrofit strategy related to a dataset [#45](https://github.com/IN-CORE/maestro-service/issues/45)
+
+
 ## [1.0.0] - 2023-03-15
 
 ### Added
