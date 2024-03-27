@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 
 from app.core.config import get_settings
 from app.db.database import engine, Base
-from app.routers import users, roles, steps
+from app.routers import users, roles, steps, datasets
 
 settings = get_settings()
 
@@ -38,6 +38,11 @@ api_router.include_router(
     steps.router,
     prefix="/steps",
     tags=["steps"],
+)
+api_router.include_router(
+    datasets.router,
+    prefix="/datasets",
+    tags=["datasets"],
 )
 
 testbed = settings.TESTBED
