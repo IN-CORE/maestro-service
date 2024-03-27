@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "maestro-service"
-version = "1.0.0"
+version = "1.1.0"
 description = "Service to manage playbooks"
 authors = ["Your Name <you@example.com>"]
 license = "MPL 2.0"
